@@ -29,11 +29,9 @@ class ReadyForUse
      */
     public function handle(Request $request, Closure $next)
     {
-        try {
-            if (!Config::get('setting.site_name')) {
-                return Redirect::to('install');
-            }
-        } catch (Exception $e) {
+        // 去掉try catch,因为就算获取配置失败也会false
+        // 产生歧义,实际要取数据库里的信息merge,容易理解为读取config/setting.php
+        if (!Config::get('setting.site_name')) {
             return Redirect::to('install');
         }
 
